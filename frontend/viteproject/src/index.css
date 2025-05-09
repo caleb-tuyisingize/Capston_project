@@ -19,7 +19,7 @@ form {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background-color: #f9f9f9;
+  background-color: #68b3db;
   font-family: Arial, sans-serif;
 }
 
@@ -53,7 +53,7 @@ form label {
 form button {
   width: 100%;
   padding: 10px;
-  background-color: #1976d2;
+  background-color: #52cf8f;
   color: white;
   border: none;
   border-radius: 5px;
@@ -62,11 +62,11 @@ form button {
 }
 
 form button:hover {
-  background-color: #1565c0;
+  background-color: #15c015;
 }
 
 form p {
   margin-top: 10px;
   text-align: center;
-  color: green;
+  color: rgb(73, 159, 73);
 }
