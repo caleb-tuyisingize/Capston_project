@@ -1,11 +1,9 @@
 import express from "express";
 import { database } from "../database.js";
-import { Pool } from "pg";
 
 database.connect().then(() => console.log("conect"))
 export const studentsRouter = express.Router()
 
-// - `GET /api/students` (Retrieve all students with pagination)
 
 
 
@@ -19,21 +17,6 @@ studentsRouter.get('/', async (req,res)=>{
     }
     })
 
-// - `GET /api/students/:id` (Retrieve specific student details)
-// - `POST /api/students` (Create a new student record)
-
-studentsRouter.get('/:id',async(req,res) => {
-    try {
-        const {id} = req.params;
-        const del = await Pool.query("DELETE FROM student where sid=$1");
-         res.json(del.filter((it) => it))
-    } catch (e) {
-        console.error(e.message);        
-    }
-})
-// - `PUT /api/students/:id` (Update an existing student record)
-// - `DELETE /api/students/:id` (Delete a student record)
-// - `GET /api/students/search` (Search and filter students)
 
     studentsRouter.get('/', async (req, res) => {
   try {
@@ -57,7 +40,7 @@ studentsRouter.get('/:id',async(req,res) => {
 
 
 
-studentsRouter.post('/', async (req, res) => {
+studentsRouter.put('/', async (req, res) => {
   const {
     name,
     email,
@@ -73,33 +56,42 @@ studentsRouter.post('/', async (req, res) => {
       [email]
     );
 
-    if (checking.rows.length > 0) {
-      return res.status(409).json({ message: "This email is already taken" });
+    if (checking.rows.length <= 0) {
+      return res.status(409).json({ message: "No email email" });
     }
 
-   
+    res.status(200).json({
+      message: "Email found",
+      user: checking.rows[0]
+    })
+    
     // const bcrypt = require('bcryptjs');
     // const hashedPassword = await bcrypt.hash(password, 10);
 
   
-    const insertQuery = await database.query(
-      `INSERT INTO users(name, email, password, role, is_active)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING id, name, email, role, is_active`,
-      [name, email, password, role, is_active]
-    );
+    // const insertQuery = await database.query(
+    //   `INSERT INTO users(name, email, password, role, is_active)
+    //    VALUES ($1, $2, $3, $4, $5)
+    //    RETURNING id, name, email, role, is_active`,
+    //   [name, email, password, role, is_active]
+    // );
 
     
-    res.status(201).json({
-      message: "User created successfully",
-      user: insertQuery.rows[0]
-    });
+    // res.status(201).json({
+    //   message: "User created successfully",
+    //   // user: insertQuery.rows[0]
+    // });
 
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+
+ studentsRouter.post('/', async (req, res) =>{
+  console.log('login-form');
+})
 
 
 
