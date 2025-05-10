@@ -4,13 +4,10 @@ import { database } from "../database.js";
 database.connect().then(() => console.log("conect"))
 export const studentsRouter = express.Router()
 
-<<<<<<< HEAD
-=======
 
 
 
 // - `GET /api/students` (Retrieve all students with pagination)
->>>>>>> 2499e78872f0b25bf152b038cf0f2f02c8964104
 
 studentsRouter.get('/', async (req,res)=>{
     try{
@@ -21,8 +18,6 @@ studentsRouter.get('/', async (req,res)=>{
     }
     })
 
-<<<<<<< HEAD
-=======
 
 
 // - `POST /api/students` (Create a new student record)
@@ -41,7 +36,6 @@ studentsRouter.post('/',async (req,res)=>{
   }=req.body
 
 
->>>>>>> 2499e78872f0b25bf152b038cf0f2f02c8964104
 
   try {
 
@@ -229,7 +223,6 @@ console.log("recieved",id);
         message: `An unexpected error occurred in Delete/STUDENTS, ${err?.message}`,
       });
     }
-<<<<<<< HEAD
 
     res.status(404).json({ message: "No users found in the database" });
     
@@ -320,10 +313,8 @@ studentsRouter.put('/:id', async (req, res) => {
       return res.status(409).json({ message: "Email already in use by another user" });
     }
 
-=======
   });
   
->>>>>>> 2499e78872f0b25bf152b038cf0f2f02c8964104
   
 // - `GET /api/students/search` (Search and filter students)
 
