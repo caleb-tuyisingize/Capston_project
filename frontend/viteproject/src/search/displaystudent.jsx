@@ -1,5 +1,5 @@
 import { useState } from "react";
-import fetched from "../vite-project/src/AP/student";
+import fetched from "../AP/student";
 
 
 const DisplayStudent  = () => {
