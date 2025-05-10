@@ -1,86 +1,69 @@
-import { useState } from "react";
-import fetched from "../AP/student";
+import React, { useEffect, useState } from 'react';
+
+const DisplayCourses = () => {
+  const [courses, setCourses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredCourses, setFilteredCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const res = await fetch('http://localhost:3004/api/courses');
+        const data = await res.json();
+        setCourses(data);
+        setFilteredCourses(data);
+      } catch (err) {
+        console.error('Failed to fetch courses:', err);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
 
-const DisplayStudent  = () => {
-    const [data,setData] = useState([{}]);
-    const [search,setSearch] = useState("");
-
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
-        console.log(search);
-    }
-    const handledata = async () => {
-        try {
-            const {data} = await fetched();
-            setData(data);
-        } catch (e) {
-           console.error(e.mssg) 
-        }
-    }
-    handledata()
-
-        const border = {
-            border : "1px solid black",
-            marginLeft : "200px",
-
-        }
-    return (
-        <>
-        <center>
-            <input type="text" name="" onChange={handleSearch}/><br /><br />
-                <table style={border}>
-                    <thead>
-                <tr >
-                    <th>ID</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Sid</th>
-                    <th>Email</th>
-                    <th>DOB</th>
-                    <th>ContactNo</th>
-                    <th>En_Date</th>
-                    <th>ProfilePic</th>
-                </tr>
-                </thead>
-                        {data.filter((data) => {
-                                 return search.toLowerCase() === '' ? data : data.firstname.toLowerCase().includes(search) ||
-                                 search.toUpperCase() === '' ? data : data.firstname.toUpperCase().includes(search) 
-}).map((stu,index) => (  
-            <tr key={index}>
-                    <td>{stu.sid}</td>
-                    <td>{stu.firstname}</td>
-                    <td>{stu.lastname}</td>
-                    <td>{stu.student_id}</td>
-                    <td>{stu.email}</td>
-                    <td>{stu.dob}</td>
-                    <td>{stu.contact_number}</td>
-                    <td>{stu.en_date}</td>
-                    <td>{stu.profile_pic}</td>
-                    <td><button type="button" onClick={(e) => {
-                    return alert("ready to update")
-                    }}>Update</button></td>
-                    <td><button type="button" onClick={(e) => {
-                    return alert("ready to Delete something")
-                    }}>Delete</button></td>
-                   
-
-
-            </tr>
-
-
-
-))}
-                
-
-            </table>
-            </center>
-        </>
-
+  useEffect(() => {
+    const filtered = courses.filter(course =>
+      course.course_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-}
+    setFilteredCourses(filtered);
+  }, [searchTerm, courses]);
 
-export default DisplayStudent;
+  return (
+    <div>
+      <h2>Course List</h2>
+      <input
+        type="text"
+        placeholder="Search by course name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      /><br /><br />
 
+      {filteredCourses.length > 0 ? (
+        <table border="1" cellPadding="8">
+          <thead>
+            <tr>
+              <th>Course Code</th>
+              <th>Course Name</th>
+              <th>Department</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredCourses.map((course, index) => (
+              <tr key={index}>
+                <td>{course.course_code}</td>
+                <td>{course.course_name}</td>
+                <td>{course.department}</td>
+                <td>{course.level}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No courses found.</p>
+      )}
+    </div>
+  );
+};
 
-
+export default DisplayCourses;

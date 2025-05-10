@@ -1,8 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import "./admin.css";
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminForm() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -21,9 +23,18 @@ export default function AdminForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3004/api/Admin", form);
+      const res = await axios.put("http://localhost:3004/api/Admin", form);
       setMessage(res.data.message);
-      setForm({ name: "", email: "", password: "", role: "admin", is_active: true });
+      setForm({
+        name: "",
+        email: "",
+        password: "",
+        role: "admin",
+        is_active: true,
+      });
+
+      navigate("/login");
+
     } catch (err) {
       setMessage(err.response?.data?.message || "Something went wrong");
     }
@@ -31,13 +42,33 @@ export default function AdminForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Register Student</h2>
+      <h2>Register Account</h2>
 
-      <input name="name" value={form.name} onChange={handleChange} placeholder="Name" required />
+      <input
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        placeholder="Name"
+        required
+      />
 
-      <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email" required />
+      <input
+        name="email"
+        type="email"
+        value={form.email}
+        onChange={handleChange}
+        placeholder="Email"
+        required
+      />
 
-      <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" required />
+      <input
+        name="password"
+        type="password"
+        value={form.password}
+        onChange={handleChange}
+        placeholder="Password"
+        required
+      />
 
       <select name="role" value={form.role} onChange={handleChange}>
         <option value="admin">Admin</option>
@@ -45,7 +76,12 @@ export default function AdminForm() {
       </select>
 
       <label>
-        <input type="checkbox" name="is_active" checked={form.is_active} onChange={handleChange} />
+        <input
+          type="checkbox"
+          name="is_active"
+          checked={form.is_active}
+          onChange={handleChange}
+        />
         Active
       </label>
 
