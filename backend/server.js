@@ -4,7 +4,7 @@ import cors from 'cors';
 import { studentsRouter } from "./router/router.js";
 const app = express();
 const port = process.env.SERVER_PORT;
-import cors from 'cors'; 
+
 
 app.use(cors({ origin: 'http://localhost:5173' }));
 
