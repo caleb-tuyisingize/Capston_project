@@ -1,4 +1,4 @@
-
+import img from "./assets/Caderno de TI.jpg";
 function Home(){
 
     return(
@@ -20,12 +20,12 @@ function Home(){
         </div>
 
         <div className="right">
-            <img src="#" alt="" />
+            <img src={img} alt="" width={300} height={320}/>
           
             <div className="upper-imgs">
-            <img src="#" alt="" />
-            <img src="#" alt="" />
-            <img src="#" alt="" />
+            <img src={img} alt="" width={300} height={320}/>
+            <img src={img} alt="" width={300} height={320}/>
+            <img src={img} alt="" width={300} height={320}/>
             </div>
         </div>
         </section>
@@ -70,9 +70,9 @@ function Home(){
 
 </div>
 <div className="gallery-imgs">
-    <img src="#" alt="" />
-    <img src="#" alt="" />
-    <img src="#" alt="" />
+<img src={img} alt="" width={300} height={320}/>
+   <img src={img} alt="" width={300} height={320}/>
+   <img src={img} alt="" width={300} height={320}/>
 </div>
     </section>
         

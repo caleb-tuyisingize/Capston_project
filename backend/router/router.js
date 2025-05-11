@@ -206,17 +206,7 @@ console.log("recieved",id);
              
              
 
-    }
-
-
-    
-            
-            
-     
-
-        
-
-     catch (err) {
+    } catch (err) {
         console.error(err.message); 
       res.status(500).json({
         success: false,
@@ -226,11 +216,7 @@ console.log("recieved",id);
 
     res.status(404).json({ message: "No users found in the database" });
     
-  } catch (err) {
-    console.error("Error connecting to the database:", err);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
+  });
 
 
 
@@ -313,7 +299,11 @@ studentsRouter.put('/:id', async (req, res) => {
       return res.status(409).json({ message: "Email already in use by another user" });
     }
 
-  });
+  } catch (err) {
+    console.error("Error connecting to the database:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
   
   
 // - `GET /api/students/search` (Search and filter students)
